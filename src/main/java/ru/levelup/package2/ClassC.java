@@ -3,17 +3,16 @@ package ru.levelup.package2;
 import annotation.RandomInt;
 import annotation.RandomString;
 
-public class ClassB {
+public class ClassC {
 
-    @RandomInt(minValue = 5, maxValue = 10)
     private int intField;
 
-    @RandomString(stringLength = 3, register = "up")
+    @RandomString(stringLength = 5, register = "low")
     private String stringField;
 
-    public ClassB() {
-        this.intField = 200;
-        this.stringField = "Class B";
+    public ClassC() {
+        this.intField = 300;
+        this.stringField = "Class C";
     }
 
     @Override

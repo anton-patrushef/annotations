@@ -1,4 +1,5 @@
 import annotation.RandomInt;
+import annotation.RandomString;
 import annotation.ReflectionClass;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
@@ -40,7 +41,7 @@ public class AnnotationProcessor {
             InstantiationException,
             IllegalAccessException,
             NoSuchMethodException,
-            InvocationTargetException  {
+            InvocationTargetException {
 
         try (ScanResult scanResult = new ClassGraph()
                 .whitelistPackages(packageName)
@@ -48,13 +49,13 @@ public class AnnotationProcessor {
             for (ClassInfo classInfo : scanResult.getAllClasses()) {
                 Class<?> classFromPackage = Class.forName(classInfo.getName());
 
-                Field[] fields = classFromPackage.getDeclaredFields(); //getClass().getDeclaredFields();
+                Field[] fields = classFromPackage.getDeclaredFields();
                 for (Field field : fields) {
                     RandomInt annotation = field.getAnnotation(RandomInt.class);
 
                     if (annotation != null) {
 
-                        if(!field.getType().toString().equals("int")){
+                        if (!field.getType().getTypeName().equals("int")) {
                             throw new java.lang.RuntimeException("this is not int field");
                         }
 
@@ -68,5 +69,39 @@ public class AnnotationProcessor {
             }
         }
     }
+
+    public void randomStringProcess(String packageName) throws ClassNotFoundException,
+            InstantiationException,
+            IllegalAccessException,
+            NoSuchMethodException,
+            InvocationTargetException {
+
+        try (ScanResult scanResult = new ClassGraph()
+                .whitelistPackages(packageName)
+                .scan()) {
+            for (ClassInfo classInfo : scanResult.getAllClasses()) {
+                Class<?> classFromPackage = Class.forName(classInfo.getName());
+
+                Field[] fields = classFromPackage.getDeclaredFields();
+                for (Field field : fields) {
+                    RandomString annotation = field.getAnnotation(RandomString.class);
+
+                    if (annotation != null) {
+                        if (!field.getType().getTypeName().equals("java.lang.String")) {
+                            throw new java.lang.RuntimeException("this is not String field");
+                        }
+
+                        Object o = classFromPackage.getDeclaredConstructor().newInstance();
+
+                        field.setAccessible(true);
+                        field.set(o, RandInt.randString(annotation.stringLength(), annotation.register()));
+                        System.out.println(o.toString());
+                    }
+                }
+            }
+        }
+
+    }
+
 }
 

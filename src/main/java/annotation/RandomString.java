@@ -5,7 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ReflectionClass {
+public @interface RandomString {
+    int stringLength() default  16;
+    String register() default "up"; // up - low
 }
