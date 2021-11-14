@@ -1,6 +1,10 @@
 package ru.levelup.package2;
 
+import annotation.RandomInt;
+
 public class ClassB {
+
+    @RandomInt(minValue = 5, maxValue = 10)
     private int intField;
     private String stringField;
 

@@ -6,8 +6,8 @@ public class Executor {
 
         AnnotationProcessor ap = new AnnotationProcessor();
 
-        ap.process("ru.levelup");
-//       ap.process("ru.levelup.package2");
+//        ap.ReflectionClassProcess("ru.levelup"); //ReflectionClass
+        ap.randomIntProcess("ru.levelup.package2");
 
     }
 }
